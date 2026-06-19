@@ -3,3 +3,5 @@ node_modules
 .DS_Store
 *.zip
 gen_img.py
+gen.py
+db_full.json
