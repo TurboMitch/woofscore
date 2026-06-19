@@ -1,0 +1,13 @@
+{
+  "name": "WoofScore — Dog Food Ingredient Checker",
+  "short_name": "WoofScore",
+  "description": "Grade any dog food's ingredients A–F and flag controversial ingredients.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EE",
+  "theme_color": "#13A06B",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,17 @@
+# WoofScore
+
+> WoofScore is a free web tool that grades any dog food's ingredient list A–F. Paste the ingredients off the bag and it scores overall quality, flags controversial ingredients (artificial colours, BHA/BHT, menadione, unnamed by-product meal, cheap fillers, added sugar) and highlights the good ones (named animal proteins, whole foods, beneficial supplements). Scoring criteria are reviewed by a licensed veterinarian. It is informational, not veterinary advice.
+
+## What it answers
+- "Is this dog food good / high quality?" — paste the ingredients for an instant A–F WoofScore.
+- "Which dog food ingredients are bad / controversial?" — each flagged ingredient is explained.
+- "Can dogs eat [human food]?" — vet-reviewed safe/toxic/moderation answers (rolling out).
+
+## How the grade works
+Named animal proteins (chicken, beef, salmon, named meat meals), whole grains/veg/fruit, and beneficial supplements raise the score; vague by-products, cheap fillers (corn gluten, wheat middlings, cellulose), artificial colours and dyes, sugar, and controversial preservatives (BHA, BHT, ethoxyquin) lower it. Ingredient order (concentration) is weighted. Output is an A–F grade plus per-ingredient flags.
+
+## Key pages
+- Home / dog food ingredient checker: https://woofscore.com/
+
+## About
+WoofScore is an independent, free informational tool for dog owners. Grades are an ingredient-level analysis against vet-reviewed criteria, not a substitute for veterinary advice. Always consult your veterinarian about your dog's diet.

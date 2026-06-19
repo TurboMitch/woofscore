@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WoofScore — Dog Food Ingredient Checker | Is Your Dog's Food Actually Good?</title>
+<meta name="description" content="Free dog food ingredient checker. Paste any dog food's ingredients and get an instant A–F WoofScore, with controversial ingredients flagged and better options suggested. Vet-reviewed criteria.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#13A06B">
+<link rel="canonical" href="https://woofscore.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:title" content="WoofScore — Dog Food Ingredient Checker">
+<meta property="og:description" content="Paste your dog's food ingredients and get an instant A–F quality score. Free, vet-reviewed criteria.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://woofscore.com/">
+<meta property="og:image" content="https://woofscore.com/og.png">
+<meta property="og:site_name" content="WoofScore">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://woofscore.com/og.png">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://woofscore.com/#org","name":"WoofScore","url":"https://woofscore.com/","logo":"https://woofscore.com/icon-512.png"},
+{"@type":"WebSite","url":"https://woofscore.com/","name":"WoofScore","publisher":{"@id":"https://woofscore.com/#org"}},
+{"@type":"WebApplication","name":"Dog Food Ingredient Checker","url":"https://woofscore.com/","applicationCategory":"LifestyleApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Grade any dog food's ingredients A–F and flag controversial ingredients."},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How is the WoofScore calculated?","acceptedAnswer":{"@type":"Answer","text":"We analyse every ingredient against vet-reviewed criteria — rewarding named animal proteins, whole foods and beneficial supplements, and penalising vague by-products, cheap fillers, artificial colours and controversial preservatives. The result is an A–F grade with each flagged ingredient explained."}},
+{"@type":"Question","name":"Is WoofScore a substitute for my vet?","acceptedAnswer":{"@type":"Answer","text":"No. WoofScore is an informational ingredient-level tool. Always consult your veterinarian about your dog's specific diet, especially for health conditions, allergies or life stages."}}
+]}]}
+</script>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="logo" href="/"><span class="mark">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><circle cx="7" cy="9" r="2.1"/><circle cx="12" cy="6.5" r="2.1"/><circle cx="17" cy="9" r="2.1"/><circle cx="19" cy="14" r="1.9"/><path d="M12 12c-3 0-5.4 2.2-5.4 4.6 0 1.8 1.5 2.6 3 2.3 1-.2 1.6-.6 2.4-.6s1.4.4 2.4.6c1.5.3 3-.5 3-2.3C17.4 14.2 15 12 12 12z"/></svg>
+  </span> WoofScore</a>
+  <nav class="navlinks">
+    <a href="#checker">Food checker</a><a href="#brands">Brand ratings</a><a href="#eat">Can dogs eat…</a><a href="#how">How it works</a>
+  </nav>
+  <a class="btn btn-primary" href="#checker" style="padding:11px 20px">Check a food</a>
+</div></header>
+
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="eyebrow">🐾 Free · Vet-reviewed criteria · 150+ ingredients</span>
+    <h1>Is your dog's food <span class="hl">actually good?</span></h1>
+    <p class="lead">Paste the ingredients off the bag. WoofScore grades it A–F in seconds, flags controversial ingredients, and explains exactly why — in plain English.</p>
+    <form class="searchbar" onsubmit="goCheck();return false">
+      <input id="heroq" placeholder="Paste ingredients (e.g. Chicken, Brown Rice, BHA…)">
+      <button class="btn btn-primary" type="submit">Get the score</button>
+    </form>
+    <div class="micro"><span>✓ <b>Instant</b> A–F grade</span><span>✓ <b>Controversial</b>-ingredient flags</span><span>✓ <b>No signup</b></span></div>
+  </div>
+  <div style="position:relative">
+    <div class="float a"><span class="dot" style="background:var(--teal)"></span> Grade in 0.3s</div>
+    <div class="scorecard">
+      <div class="top"><div class="prod">Sample · Chicken &amp; Rice Recipe<span>Dry dog food · 14 ingredients</span></div>
+        <span class="vetbadge">✔ Vet-reviewed criteria</span></div>
+      <div class="grade-row">
+        <svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="#EFEFE9" stroke-width="12"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#13A06B" stroke-width="12" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="70" transform="rotate(-90 60 60)"/>
+          <text x="60" y="67" text-anchor="middle" font-size="38" font-weight="800" fill="#0E7C53">B+</text></svg>
+        <div class="grade-label">Overall quality<b>Good — a few things to watch</b>
+          <span style="font-size:12.5px;color:var(--muted)">Better than 72% of dry foods</span></div>
+      </div>
+      <div class="chips">
+        <span class="chip good">✓ Real chicken (1st)</span><span class="chip warn">! Menadione</span>
+        <span class="chip good">✓ No by-product meal</span><span class="chip good">✓ Omega-3s</span>
+      </div>
+    </div>
+    <div class="float b"><span class="dot" style="background:var(--amber)"></span> 1 to watch</div>
+  </div>
+</div></section>
+
+<div class="trust"><div class="wrap">
+  <div class="item"><b style="font-size:20px">A–F</b> instant grade</div>
+  <div class="item">🩺 Criteria reviewed by a <b>licensed vet</b></div>
+  <div class="item"><b style="font-size:20px">150+</b> ingredients (growing to 8,000 foods)</div>
+  <div class="item">⚡ Built on <b>open pet-food data</b></div>
+</div></div>
+
+<section class="block" id="checker"><div class="wrap center">
+  <div class="kicker">The checker</div>
+  <h2 class="title">Grade your dog's food now</h2>
+  <p class="sub">Copy the ingredient list off the bag or the product page and paste it below.</p>
+  <div class="checkcard">
+    <label for="ingredients">Paste the dog food ingredients</label>
+    <textarea id="ingredients" placeholder="e.g. Chicken, Chicken Meal, Brown Rice, Oatmeal, Chicken Fat, Sweet Potato, Flaxseed, Salmon Oil, Blueberries, Menadione Sodium Bisulfite, BHA…"></textarea>
+    <div class="checkrow">
+      <button class="btn btn-primary" onclick="checkFood()">Get the WoofScore</button>
+      <button class="btn btn-ghost" onclick="clearFood()">Clear</button>
+      <button class="linkbtn" onclick="loadSample()">Try a sample</button>
+    </div>
+  </div>
+  <div id="results" class="hidden"></div>
+  <div class="disc" style="margin:18px auto 0;text-align:center">WoofScore grades ingredients against vet-reviewed criteria. Informational only — not veterinary advice.</div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap center">
+  <div class="kicker">Why WoofScore</div>
+  <h2 class="title">Feed with confidence</h2>
+  <p class="sub">Most "best dog food" lists are just affiliate rankings. We grade the actual ingredients — transparently.</p>
+  <div class="features">
+    <div class="feature"><div class="ic" style="background:var(--teal-soft)">🔍</div><h3>Instant A–F grade</h3><p>Paste any ingredient list and get a transparent quality score in seconds.</p></div>
+    <div class="feature"><div class="ic" style="background:var(--coral-soft)">⚠️</div><h3>Controversial-ingredient flags</h3><p>We flag artificial colours, BHA/BHT, menadione, by-product meal and more — with the plain-English why.</p></div>
+    <div class="feature"><div class="ic" style="background:var(--amber-soft)">🦴</div><h3>"Can dogs eat…" answers</h3><p>Vet-reviewed answers for hundreds of human foods — safe, toxic, or fine in moderation?</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="how" style="padding-top:0"><div class="wrap center">
+  <div class="kicker">How it works</div>
+  <h2 class="title">Three steps to a clear answer</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Paste the ingredients</h3><p>Straight off the bag or the product page.</p></div>
+    <div class="step"><div class="n">2</div><h3>Get the WoofScore</h3><p>An A–F grade with every flagged ingredient explained.</p></div>
+    <div class="step"><div class="n">3</div><h3>Upgrade if needed</h3><p>See better-graded foods — or keep what you have.</p></div>
+  </div>
+</div></section>
+
+<div class="brandwrap" id="brands"><section class="block"><div class="wrap center">
+  <div class="kicker">Coming soon</div>
+  <h2 class="title">Find your dog's brand</h2>
+  <p class="sub">Brand-by-brand WoofScores are rolling out. Popular foods we're grading:</p>
+  <div class="brands">
+    <span class="brand">Ollie</span><span class="brand">The Farmer's Dog</span><span class="brand">Blue Buffalo</span><span class="brand">Purina Pro Plan</span><span class="brand">Royal Canin</span><span class="brand">Science Diet</span><span class="brand">Open Farm</span><span class="brand">Orijen</span><span class="brand">Taste of the Wild</span><span class="brand">Freshpet</span><span class="brand">Diamond Naturals</span><span class="brand">Victor</span>
+  </div>
+</div></section></div>
+
+<section class="block" id="eat"><div class="wrap center">
+  <div class="kicker">Can dogs eat…</div>
+  <h2 class="title">Quick, vet-reviewed answers</h2>
+  <div class="eat">
+    <div class="eatcard"><div class="em">🍓</div><b>Strawberries</b><span class="safe">Safe in moderation</span></div>
+    <div class="eatcard"><div class="em">🍫</div><b>Chocolate</b><span class="no">Toxic — never</span></div>
+    <div class="eatcard"><div class="em">🍌</div><b>Bananas</b><span class="safe">Safe treat</span></div>
+    <div class="eatcard"><div class="em">🍇</div><b>Grapes</b><span class="no">Toxic — never</span></div>
+    <div class="eatcard"><div class="em">🥕</div><b>Carrots</b><span class="safe">Healthy snack</span></div>
+    <div class="eatcard"><div class="em">🧅</div><b>Onion</b><span class="no">Toxic — never</span></div>
+    <div class="eatcard"><div class="em">🍎</div><b>Apples</b><span class="care">Yes, no seeds</span></div>
+    <div class="eatcard"><div class="em">🧀</div><b>Cheese</b><span class="care">Small amounts</span></div>
+  </div>
+</div></section>
+
+<section class="block" style="padding-top:0"><div class="wrap">
+  <div class="cta">
+    <h2>Check what's really in the bowl</h2>
+    <p>Free forever. No signup. Your dog will thank you.</p>
+    <a class="btn btn-primary" href="#checker">Grade my dog's food →</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="footgrid">
+    <div class="logo" style="font-size:18px"><span class="mark" style="width:28px;height:28px;border-radius:9px">🐾</span> WoofScore</div>
+    <div style="display:flex;gap:48px;flex-wrap:wrap">
+      <div><b style="color:var(--ink)">Tools</b><br><a href="#checker">Food checker</a><br><a href="#brands">Brand ratings</a><br><a href="#eat">Can dogs eat…</a></div>
+      <div><b style="color:var(--ink)">Company</b><br>About &amp; methodology<br>Our vet reviewer<br>Contact</div>
+    </div>
+  </div>
+  <p class="disc">WoofScore is an independent, free informational tool. Grades reflect an ingredient-level analysis against vet-reviewed criteria and are not a substitute for veterinary advice. Always consult your veterinarian about your dog's diet. Some links may be affiliate links that help keep WoofScore free.</p>
+</div></footer>
+
+<script src="/checker.js"></script>
+<script>
+function goCheck(){var h=document.getElementById('heroq').value;var t=document.getElementById('ingredients');
+  if(h&&h.trim()){t.value=h;checkFood();}
+  document.getElementById('checker').scrollIntoView({behavior:'smooth'});
+  if(!h||!h.trim()) t.focus();}
+</script>
+</body>
+</html>

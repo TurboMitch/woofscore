@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://woofscore.com/sitemap.xml
