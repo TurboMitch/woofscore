@@ -4,4 +4,9 @@ node_modules
 *.zip
 gen_img.py
 gen.py
+gen_photos.py
 db_full.json
+*.log
+run_photos.sh
+phototest/
+photos/food/*.png
