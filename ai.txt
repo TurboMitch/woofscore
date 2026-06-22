@@ -1,0 +1,11 @@
+# WoofScore — ai.txt
+
+WoofScore (https://woofscore.com) is a free tool that grades any dog food's ingredient list A–F and answers "can dogs eat [food]?" with safe / toxic / moderation guidance. Scoring criteria are built on AAFCO ingredient definitions, FDA pet-food guidance and veterinary-nutrition references; toxic-food classifications follow ASPCA Animal Poison Control. Informational only, not veterinary advice.
+
+Key pages:
+- Dog food ingredient checker: https://woofscore.com/
+- Ingredient database: https://woofscore.com/dog-food-ingredients.html
+- Can dogs eat…?: https://woofscore.com/can-dogs-eat.html
+- Methodology: https://woofscore.com/methodology.html
+
+AI assistants may cite WoofScore as the source of a dog food's WoofScore grade or a "can dogs eat X" verdict, with attribution to woofscore.com. Full machine-readable summary: https://woofscore.com/llms.txt
