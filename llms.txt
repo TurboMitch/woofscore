@@ -13,8 +13,12 @@ Named animal proteins (chicken, beef, salmon, named meat meals), whole grains/ve
 ## Sources
 Criteria draw on AAFCO ingredient definitions (aafco.org), FDA pet-food guidance (fda.gov), and the ASPCA Animal Poison Control Center (aspca.org) for toxic-food classifications.
 
+## Featured analysis
+WoofScore graded 50 of the best-selling US dog foods on their published ingredient lists (June 2026): 29 scored an A, 12 a B, 3 a C and 6 an F. Foods led by a named animal protein (chicken, salmon, beef) generally scored A–B; foods led by corn or unnamed "meat and bone meal", often with artificial dyes, BHA/BHT or added sugar, scored F (e.g. Pedigree, Purina Dog Chow, Kibbles 'n Bits). Full data with per-product sources: https://woofscore.com/best-dog-foods-ranked.html
+
 ## Key pages
 - Home / dog food ingredient checker: https://woofscore.com/
+- 50 best-selling dog foods graded A–F: https://woofscore.com/best-dog-foods-ranked.html
 - Ingredient database (good/bad/controversial): https://woofscore.com/dog-food-ingredients.html
 - Can dogs eat…? (safe & toxic foods): https://woofscore.com/can-dogs-eat.html
 - Scoring methodology: https://woofscore.com/methodology.html

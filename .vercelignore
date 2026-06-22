@@ -6,3 +6,6 @@ db_full.json
 run_photos.sh
 phototest/
 photos/food/*.png
+score.js
+study_products.json
+study_results.json
