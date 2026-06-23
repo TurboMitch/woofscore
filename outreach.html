@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>WoofScore Outreach Console</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--ink:#1B2A24;--teal:#13A06B;--teal-dk:#0E7C53;--cream:#F6F4EE;--line:#D9D9D0;--muted:#6B7670;--warn:#C9912A;--bad:#E0503C}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--cream)}
+a{color:var(--teal-dk)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:18px}.logo .m{display:inline-flex;width:26px;height:26px;background:var(--teal);border-radius:8px;align-items:center;justify-content:center;color:#fff;margin-right:6px;vertical-align:middle}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+button{font:inherit;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;cursor:pointer}
+button.primary{background:var(--teal);color:#fff;border-color:var(--teal)}button.primary:hover{background:var(--teal-dk)}
+button.danger{background:var(--bad);color:#fff;border-color:var(--bad)}
+button.sm{padding:5px 9px;font-size:13px;border-radius:8px}
+input,textarea,select{font:inherit;border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+label{font-weight:700;font-size:13px;display:block;margin:8px 0 3px}
+.row{display:flex;gap:12px;flex-wrap:wrap}.row>div{flex:1;min-width:160px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;color:var(--muted);font-size:12px;border-bottom:2px solid var(--line);padding:8px 6px}
+td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top}
+.badge{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800;color:#fff}
+.b-new{background:#9aa39d}.b-sent{background:var(--teal)}.b-replied{background:#3b7dd8}.b-skipped{background:#b6b1a6}.b-failed{background:var(--bad)}
+.stat{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 8px 8px 0;min-width:96px}
+.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}.small{font-size:12px}
+.gate{position:fixed;inset:0;background:var(--cream);display:flex;align-items:center;justify-content:center;z-index:50}
+.gate .box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;max-width:420px;width:92%}
+#log{font:12px/1.5 ui-monospace,Menlo,monospace;background:#0e1714;color:#cfe8dd;border-radius:10px;padding:12px;max-height:200px;overflow:auto;white-space:pre-wrap}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:2px 7px;font-size:11px;font-weight:700;margin-left:4px}
+.warnbox{background:#FFF7E6;border:1px solid #E9D8A6;border-radius:10px;padding:10px 12px;font-size:13px}
+dialog{border:1px solid var(--line);border-radius:14px;padding:0;max-width:680px;width:94%}
+dialog .h{padding:14px 18px;border-bottom:1px solid var(--line);font-weight:800}
+dialog .b{padding:16px 18px}dialog .f{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+</style></head><body>
+
+<div class="gate" id="gate"><div class="box">
+  <div class="logo"><span class="m">🐾</span>WoofScore Outreach</div>
+  <p class="small muted">Enter your outreach passphrase (the <code>OUTREACH_SECRET</code> you set in Vercel). It unlocks this console and authorises sends.</p>
+  <input id="pass" type="password" placeholder="Passphrase" onkeydown="if(event.key==='Enter')unlock()">
+  <div style="margin-top:12px"><button class="primary" onclick="unlock()">Unlock</button></div>
+  <p id="gateMsg" class="small" style="color:var(--bad)"></p>
+</div></div>
+
+<div id="app" style="display:none">
+<header>
+  <div class="logo"><span class="m">🐾</span>Outreach Console</div>
+  <span class="muted small">Study: <a href="/best-dog-foods-ranked.html" target="_blank">50 dog foods graded A–F</a></span>
+  <span style="flex:1"></span>
+  <button class="sm" onclick="toggleSettings()">⚙ Settings</button>
+  <button class="sm" onclick="lock()">Lock</button>
+</header>
+<div class="wrap">
+
+  <div class="warnbox" style="margin-bottom:14px">
+    <b>Sending responsibly:</b> only contacts with a published email can be auto-sent. Sends are throttled (daily cap + delay) and include an opt-out footer to protect woofscore.com's deliverability. Cold email at high volume can get a Resend account suspended — keep it personalised and modest.
+  </div>
+
+  <div id="stats" class="card"></div>
+
+  <div class="card" id="settings" style="display:none">
+    <h3 style="margin-top:0">Settings</h3>
+    <div class="row">
+      <div><label>From name</label><input id="s_fromName"></div>
+      <div><label>From email (must be a verified woofscore.com address in Resend)</label><input id="s_fromEmail"></div>
+      <div><label>Reply-to</label><input id="s_replyTo"></div>
+    </div>
+    <div class="row">
+      <div><label>Daily cap</label><input id="s_cap" type="number" min="1" max="200"></div>
+      <div><label>Delay between sends (seconds)</label><input id="s_delay" type="number" min="5" max="600"></div>
+      <div><label>Physical address (required for CAN-SPAM footer)</label><input id="s_addr" placeholder="Street, City, Country"></div>
+    </div>
+    <label>Subject (tokens: {{name}} {{firstname}} {{site}} {{focus}})</label><input id="s_subject">
+    <label>Email body</label><textarea id="s_body" rows="9"></textarea>
+    <p class="small muted">An opt-out footer with your name, woofscore.com and your address is appended automatically to every send.</p>
+    <button class="primary" onclick="saveSettings()">Save settings</button>
+    <span id="setMsg" class="small" style="color:var(--teal-dk);margin-left:8px"></span>
+  </div>
+
+  <div class="card">
+    <div class="row" style="align-items:flex-end">
+      <div style="flex:2"><label>Search</label><input id="f_q" placeholder="Search name / site…" oninput="render()"></div>
+      <div><label>Priority</label><select id="f_prio" onchange="render()"><option value="">All</option><option>A</option><option>B</option><option>C</option></select></div>
+      <div><label>Channel</label><select id="f_chan" onchange="render()"><option value="">All</option><option value="blog">Blogs</option><option value="journalist">Journalists</option></select></div>
+      <div><label>Status</label><select id="f_status" onchange="render()"><option value="">All</option><option value="new">Not sent</option><option value="sent">Sent</option><option value="replied">Replied</option><option value="skipped">Skipped</option><option value="failed">Failed</option></select></div>
+      <div><label>Emailable</label><select id="f_em" onchange="render()"><option value="">All</option><option value="1">Has email</option><option value="0">Contact page only</option></select></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="primary" id="runBtn" onclick="runCampaign()">▶ Run campaign (auto-send eligible)</button>
+      <button class="danger" id="stopBtn" onclick="stopCampaign()" style="display:none">■ Stop</button>
+      <span id="runState" class="small muted"></span>
+    </div>
+  </div>
+
+  <div class="card"><div id="log">Ready.</div></div>
+
+  <div class="card" style="overflow-x:auto">
+    <table><thead><tr><th>Status</th><th>Contact</th><th>Site / profile</th><th>Email</th><th>Pri</th><th>Actions</th></tr></thead>
+    <tbody id="tb"></tbody></table>
+  </div>
+</div></div>
+
+<dialog id="composer">
+  <div class="h">Review &amp; send</div>
+  <div class="b">
+    <label>To</label><input id="c_to" readonly>
+    <label>Subject</label><input id="c_subject">
+    <label>Body (footer appended automatically)</label><textarea id="c_body" rows="11"></textarea>
+  </div>
+  <div class="f">
+    <button onclick="document.getElementById('composer').close()">Cancel</button>
+    <button class="primary" id="c_send" onclick="sendFromComposer()">Send now</button>
+  </div>
+</dialog>
+
+<script>
+const STUDY="https://woofscore.com/best-dog-foods-ranked.html";
+const DEF={fromName:"Mitchell at WoofScore",fromEmail:"mitchell@woofscore.com",replyTo:"mitchell@woofscore.com",cap:20,delay:45,addr:"",
+ subject:"6 of the best-selling dog foods just scored an F",
+ body:`Hi {{firstname}},
+
+I came across {{site}} and really like what you're doing.
+
+I run WoofScore, a free dog-food ingredient checker. We just graded the 50 best-selling dog foods A–F on their published ingredient lists — 29 earned an A, but 6 popular brands scored an F. The full data, with a source for every product, is here:
+`+STUDY+`
+
+If it's useful for your readers, I'm happy to share the breakdown, the worst offenders, or pull a custom angle for {{site}} — no strings. Every grade is reproducible with our free tool.
+
+Thanks for the great work,`};
+let CONTACTS=[], STATUS={}, SECRET="", running=false, composerCtx=null;
+
+function lsGet(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
+function lsSet(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function settings(){return Object.assign({},DEF,lsGet("wo_settings",{}))}
+function today(){return new Date().toISOString().slice(0,10)}
+function sentDay(){let s=lsGet("wo_sentday",{date:today(),count:0});if(s.date!==today())s={date:today(),count:0};return s}
+function bumpSentDay(){let s=sentDay();s.count++;lsSet("wo_sentday",s)}
+function key(c){return c.email?c.email.toLowerCase():("x:"+c.name.toLowerCase())}
+function firstName(n){const w=n.replace(/[^A-Za-z .'-].*$/,'').trim().split(/\s+/)[0];return /^[A-Z][a-z]+$/.test(w)?w:"there"}
+
+function unlock(){
+  const p=document.getElementById('pass').value.trim();
+  if(!p){document.getElementById('gateMsg').textContent="Enter your passphrase.";return}
+  SECRET=p; lsSet("wo_secret",p);
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+  boot();
+}
+function lock(){localStorage.removeItem("wo_secret");location.reload()}
+
+async function boot(){
+  loadSettingsForm();
+  try{
+    const r=await fetch('/outreach_contacts.json',{cache:'no-store'});
+    CONTACTS=await r.json();
+  }catch(e){log("Could not load contacts: "+e);CONTACTS=[]}
+  CONTACTS.forEach((c,i)=>c._i=i);
+  STATUS=lsGet("wo_status",{});
+  if(!boot._wired){boot._wired=true;
+    document.getElementById('tb').addEventListener('click',e=>{
+      const b=e.target.closest('button[data-act]');if(!b)return;
+      const c=CONTACTS[+b.dataset.i];if(!c)return;
+      const a=b.dataset.act;
+      if(a==='compose')openComposer(c);
+      else if(a==='open')window.open(c.contact,'_blank');
+      else if(a==='replied')mark(c,'replied');
+      else if(a==='skipped')mark(c,'skipped');
+    });
+  }
+  render();
+}
+
+function loadSettingsForm(){
+  const s=settings();
+  s_fromName.value=s.fromName;s_fromEmail.value=s.fromEmail;s_replyTo.value=s.replyTo;
+  s_cap.value=s.cap;s_delay.value=s.delay;s_addr.value=s.addr;s_subject.value=s.subject;s_body.value=s.body;
+}
+function saveSettings(){
+  lsSet("wo_settings",{fromName:s_fromName.value.trim(),fromEmail:s_fromEmail.value.trim(),replyTo:s_replyTo.value.trim(),
+    cap:+s_cap.value||20,delay:+s_delay.value||45,addr:s_addr.value.trim(),subject:s_subject.value,body:s_body.value});
+  document.getElementById('setMsg').textContent="Saved.";setTimeout(()=>document.getElementById('setMsg').textContent="",1500);
+  render();
+}
+function toggleSettings(){const e=document.getElementById('settings');e.style.display=e.style.display==='none'?'block':'none'}
+
+function st(c){return (STATUS[key(c)]&&STATUS[key(c)].status)||"new"}
+function setSt(c,status,extra){STATUS[key(c)]=Object.assign({status,date:new Date().toISOString()},extra||{});lsSet("wo_status",STATUS)}
+
+function footer(){
+  const s=settings();
+  return `\n\n—\n${s.fromName} · WoofScore · woofscore.com\n${s.addr||"[add your postal address in Settings]"}\nNot a fit? Reply "unsubscribe" and I won't email you again.`;
+}
+function merge(t,c){
+  return t.replaceAll("{{name}}",c.name).replaceAll("{{firstname}}",firstName(c.name))
+          .replaceAll("{{site}}",c.name).replaceAll("{{focus}}",(c.focus||"").toLowerCase());
+}
+function buildEmail(c){
+  const s=settings();
+  const subject=merge(s.subject,c);
+  const bodyText=merge(s.body,c)+footer();
+  const html=bodyText.split("\n").map(l=>l.trim()===""?"<br>":("<p style='margin:0 0 10px'>"+l.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(https?:\/\/[^\s]+)/g,'<a href="$1">$1</a>')+"</p>")).join("");
+  return {subject,text:bodyText,html};
+}
+
+async function sendOne(c){
+  const s=settings();
+  if(!s.addr){throw new Error("Add your postal address in Settings first (required).")}
+  if(!c.email){throw new Error("No email for this contact")}
+  const em=buildEmail(c);
+  const res=await fetch('/api/send-outreach',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({secret:SECRET,to:c.email,subject:em.subject,html:em.html,text:em.text,fromName:s.fromName,fromEmail:s.fromEmail,replyTo:s.replyTo})});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok||!data.ok)throw new Error(data.error||("HTTP "+res.status));
+  return data.id;
+}
+
+function eligible(){return CONTACTS.filter(c=>c.email && ["new","failed"].includes(st(c)))}
+
+async function runCampaign(){
+  if(running)return;
+  const s=settings();
+  if(!s.addr){alert("Add your postal address in Settings first — it's legally required in the email footer.");toggleSettings();return}
+  const pool=eligible();
+  const day=sentDay();const remaining=Math.max(0,s.cap-day.count);
+  const n=Math.min(pool.length,remaining);
+  if(n<=0){alert(pool.length===0?"No eligible contacts left to email.":("Daily cap reached ("+s.cap+"). Resets tomorrow."));return}
+  if(!confirm(`Auto-send to ${n} contact(s) now?\nFrom: ${s.fromName} <${s.fromEmail}>\nThrottle: 1 every ${s.delay}s · daily cap ${s.cap} (${day.count} sent today).\n\nThis sends REAL emails via Resend.`))return;
+  running=true;document.getElementById('runBtn').style.display='none';document.getElementById('stopBtn').style.display='inline-block';
+  log(`Campaign started — up to ${n} sends.`);
+  for(let i=0;i<n && running;i++){
+    const c=pool[i];
+    document.getElementById('runState').textContent=`Sending ${i+1}/${n}: ${c.name}…`;
+    try{const id=await sendOne(c);setSt(c,"sent",{id});bumpSentDay();log(`✓ ${c.name} <${c.email}> sent`);}
+    catch(e){setSt(c,"failed",{error:String(e.message||e)});log(`✗ ${c.name}: ${e.message||e}`);}
+    render();
+    if(i<n-1&&running)await new Promise(r=>setTimeout(r,(s.delay||45)*1000));
+  }
+  running=false;document.getElementById('runBtn').style.display='inline-block';document.getElementById('stopBtn').style.display='none';
+  document.getElementById('runState').textContent="Done.";log("Campaign finished.");
+}
+function stopCampaign(){running=false;log("Stopping after current send…")}
+
+function openComposer(c){
+  composerCtx=c;const em=buildEmail(c);
+  c_to.value=c.email;c_subject.value=em.subject;c_body.value=em.text;
+  document.getElementById('composer').showModal();
+}
+async function sendFromComposer(){
+  const c=composerCtx;const s=settings();
+  if(!s.addr){alert("Add your postal address in Settings first.");return}
+  const btn=document.getElementById('c_send');btn.disabled=true;btn.textContent="Sending…";
+  try{
+    const text=c_body.value;const subject=c_subject.value;
+    const html=text.split("\n").map(l=>l.trim()===""?"<br>":("<p style='margin:0 0 10px'>"+l.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(https?:\/\/[^\s]+)/g,'<a href="$1">$1</a>')+"</p>")).join("");
+    const res=await fetch('/api/send-outreach',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({secret:SECRET,to:c.email,subject,html,text,fromName:s.fromName,fromEmail:s.fromEmail,replyTo:s.replyTo})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok||!data.ok)throw new Error(data.error||("HTTP "+res.status));
+    setSt(c,"sent",{id:data.id});bumpSentDay();log(`✓ ${c.name} sent (manual)`);
+    document.getElementById('composer').close();render();
+  }catch(e){alert("Send failed: "+(e.message||e));log(`✗ ${c.name}: ${e.message||e}`);}
+  btn.disabled=false;btn.textContent="Send now";
+}
+
+function mark(c,status){setSt(c,status);render()}
+function log(m){const el=document.getElementById('log');el.textContent=`[${new Date().toLocaleTimeString()}] ${m}\n`+el.textContent}
+
+function stats(){
+  const tot=CONTACTS.length,em=CONTACTS.filter(c=>c.email).length;
+  let sent=0,replied=0,failed=0;CONTACTS.forEach(c=>{const s=st(c);if(s==="sent")sent++;if(s==="replied")replied++;if(s==="failed")failed++;});
+  const day=sentDay();const elig=eligible().length;
+  document.getElementById('stats').innerHTML=
+   `<span class="stat"><b>${tot}</b><span>contacts</span></span>`+
+   `<span class="stat"><b>${em}</b><span>emailable</span></span>`+
+   `<span class="stat"><b>${elig}</b><span>eligible now</span></span>`+
+   `<span class="stat"><b>${sent}</b><span>sent total</span></span>`+
+   `<span class="stat"><b>${day.count}</b><span>sent today</span></span>`+
+   `<span class="stat"><b>${replied}</b><span>replied</span></span>`+
+   `<span class="stat"><b>${failed}</b><span>failed</span></span>`;
+}
+
+function render(){
+  stats();
+  const q=(f_q.value||"").toLowerCase(),fp=f_prio.value,fc=f_chan.value,fs=f_status.value,fe=f_em.value;
+  const rows=CONTACTS.filter(c=>{
+    if(q&&!(c.name+" "+(c.focus||"")).toLowerCase().includes(q))return false;
+    if(fp&&c.priority!==fp)return false;
+    if(fc&&c.channel!==fc)return false;
+    if(fs&&st(c)!==fs)return false;
+    if(fe==="1"&&!c.email)return false;
+    if(fe==="0"&&c.email)return false;
+    return true;
+  });
+  const order={A:0,B:1,C:2,"":3};
+  rows.sort((a,b)=>(order[a.priority]-order[b.priority])||a.name.localeCompare(b.name));
+  document.getElementById('tb').innerHTML=rows.map(c=>{
+    const s=st(c);const badge=`<span class="badge b-${s}">${s}</span>`;
+    const site=`<a href="${c.url}" target="_blank" rel="noopener">${c.channel==='journalist'?(c.org||'profile'):hostOf(c.url)}</a>`;
+    const emailCell=c.email?`<a href="mailto:${c.email}">${c.email}</a>`:`<a href="${c.contact}" target="_blank" rel="noopener" class="muted">contact page ↗</a>`;
+    let act="";
+    if(c.email){act+=`<button class="sm primary" data-act="compose" data-i="${c._i}">Review &amp; send</button> `;}
+    else{act+=`<button class="sm" data-act="open" data-i="${c._i}">Open page</button> `;}
+    act+=`<button class="sm" data-act="replied" data-i="${c._i}">Replied</button> `;
+    act+=`<button class="sm" data-act="skipped" data-i="${c._i}">Skip</button>`;
+    return `<tr><td>${badge}</td><td><b>${c.name}</b>${c.channel==='journalist'?' <span class="pill">writer</span>':''}<div class="small muted">${(c.focus||'').slice(0,70)}</div></td><td>${site}</td><td class="small">${emailCell}</td><td>${c.priority||'·'}</td><td>${act}</td></tr>`;
+  }).join("")||`<tr><td colspan="6" class="muted">No contacts match.</td></tr>`;
+}
+function hostOf(u){try{return new URL(u).host.replace(/^www\./,'')}catch{return u}}
+
+// auto-unlock if secret already stored
+(function(){const s=lsGet("wo_secret","");if(s){SECRET=s;document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';boot();}})();
+</script>
+</body></html>

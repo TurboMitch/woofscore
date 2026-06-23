@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /outreach.html
+Disallow: /outreach_contacts.json
+Disallow: /api/
 
 Sitemap: https://woofscore.com/sitemap.xml
