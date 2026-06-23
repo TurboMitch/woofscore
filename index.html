@@ -96,6 +96,11 @@
       <button class="btn btn-ghost" onclick="clearFood()">Clear</button>
       <button class="linkbtn" onclick="loadSample()">Try a sample</button>
     </div>
+    <div class="checkrow" style="margin-top:10px;border-top:1px dashed var(--line);padding-top:12px">
+      <span class="sub" style="margin:0 4px 0 0;align-self:center">Faster:</span>
+      <button class="btn btn-ghost" onclick="WS&&WS.openScanner()">📷 Scan barcode</button>
+      <button class="btn btn-ghost" onclick="WS&&WS.photoOCR()">🖼️ Photo of ingredients</button>
+    </div>
   </div>
   <div id="results" class="hidden"></div>
   <div class="disc" style="margin:18px auto 0;text-align:center">WoofScore grades ingredients against published AAFCO/FDA criteria. Informational only — not veterinary advice.</div>
@@ -167,6 +172,8 @@
 </div></footer>
 
 <script src="/checker.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js" defer></script>
+<script src="/scan.js" defer></script>
 <script>
 function goCheck(){var h=document.getElementById('heroq').value;var t=document.getElementById('ingredients');
   if(h&&h.trim()){t.value=h;checkFood();}
