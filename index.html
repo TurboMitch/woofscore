@@ -51,7 +51,7 @@
     <h1>Is your dog's food <span class="hl">actually good?</span></h1>
     <p class="lead">Paste the ingredients off the bag. WoofScore grades it A–F in seconds, flags controversial ingredients, and explains exactly why — in plain English.</p>
     <form class="searchbar" onsubmit="goCheck();return false">
-      <input id="heroq" placeholder="Paste ingredients (e.g. Chicken, Brown Rice, BHA…)">
+      <input id="heroq" placeholder="Paste the full ingredient list (Chicken, Brown Rice, BHA…)">
       <button class="btn btn-primary" type="submit">Get the score</button>
     </form>
     <div class="micro"><span>✓ <b>Instant</b> A–F grade</span><span>✓ <b>Controversial</b>-ingredient flags</span><span>✓ <b>No signup</b></span></div>
@@ -89,8 +89,8 @@
   <h2 class="title">Grade your dog's food now</h2>
   <p class="sub">Copy the ingredient list off the bag or the product page and paste it below.</p>
   <div class="checkcard">
-    <label for="ingredients">Paste the dog food ingredients</label>
-    <textarea id="ingredients" placeholder="e.g. Chicken, Chicken Meal, Brown Rice, Oatmeal, Chicken Fat, Sweet Potato, Flaxseed, Salmon Oil, Blueberries, Menadione Sodium Bisulfite, BHA…"></textarea>
+    <label for="ingredients">Paste the full ingredient list from the bag</label>
+    <textarea id="ingredients" placeholder="Paste the whole list, e.g. Chicken, Brown Rice, Chicken Meal, Oatmeal, Chicken Fat, Sweet Potato, Flaxseed, Salmon Oil, Blueberries… &#10;&#10;(Checking a single food like banana? Try “Can dogs eat…” instead.)"></textarea>
     <div class="checkrow">
       <button class="btn btn-primary" onclick="checkFood()">Get the WoofScore</button>
       <button class="btn btn-ghost" onclick="clearFood()">Clear</button>
