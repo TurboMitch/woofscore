@@ -156,6 +156,12 @@ function gradeFor(score){
   if(score>=44)return["D","#E07B36"]; return["F","#E0503C"];
 }
 
+// "Can dogs eat X" foods — used to route single-food queries to the right page.
+const FOODS_CDE=[["Chocolate","chocolate"],["Grapes","grapes"],["Raisins","raisins"],["Onion","onion"],["Garlic","garlic"],["Xylitol","xylitol"],["Macadamia nuts","macadamia-nuts"],["Alcohol","alcohol"],["Caffeine","caffeine"],["Cherries","cherries"],["Avocado","avocado"],["Nutmeg","nutmeg"],["Strawberries","strawberries"],["Bananas","bananas"],["Blueberries","blueberries"],["Watermelon","watermelon"],["Apples","apples"],["Carrots","carrots"],["Cucumber","cucumber"],["Green beans","green-beans"],["Pumpkin","pumpkin"],["Sweet potato","sweet-potato"],["Peanut butter","peanut-butter"],["Cheese","cheese"],["Yogurt","yogurt"],["Eggs","eggs"],["Chicken","chicken"],["Salmon","salmon"],["Broccoli","broccoli"],["Celery","celery"],["Peas","peas"],["Mango","mango"],["Pineapple","pineapple"],["Oranges","oranges"],["Peaches","peaches"],["Pears","pears"],["Raspberries","raspberries"],["Blackberries","blackberries"],["Cantaloupe","cantaloupe"],["Potatoes","potatoes"],["Rice","rice"],["Oatmeal","oatmeal"],["Popcorn","popcorn"],["Coconut","coconut"],["Spinach","spinach"],["Corn","corn"],["Turkey","turkey"],["Shrimp","shrimp"],["Bread","bread"],["Honey","honey"],["Almonds","almonds"],["Tomatoes","tomatoes"],["Mushrooms","mushrooms"],["Pork","pork"],["Ice cream","ice-cream"]];
+const foodLookup={};
+FOODS_CDE.forEach(([n,s])=>{const k=n.toLowerCase();[k,k.replace(/s$/,''),k+'s'].forEach(a=>{if(!(a in foodLookup))foodLookup[a]=[n,s];});});
+function findFood(raw){const k=normalize(raw).trim();return foodLookup[k]||foodLookup[k.replace(/s$/,'')]||foodLookup[k+'s']||null;}
+
 function checkFood(){
   const ta=document.getElementById('ingredients'), res=document.getElementById('results');
   if(!ta||!res)return; const raw=ta.value; if(!raw.trim()){res.classList.add('hidden');return;}
@@ -174,6 +180,23 @@ function checkFood(){
       if(m.t==="b")bad.push(m); else if(m.t==="w")watch.push(m); else if(m.t==="g")great.push(m);
     } else { const k=normalize(t); if(k && !seen.has(k)){seen.add(k); unknown.push(t.trim());} }
   });
+  if(matched.length===0){
+    const f=findFood(raw);
+    let h;
+    if(f){
+      const fn=escapeHtml(f[0].toLowerCase());
+      h='<div class="rh-grade">Did you mean: can dogs eat '+fn+'?</div>'+
+        '<p class="muted" style="margin-top:6px">This tool grades a dog food\'s full <b>ingredient list</b>. For a single food like this, here\'s the safe-or-not answer:</p>'+
+        '<p style="margin-top:12px"><a class="btn btn-primary" style="text-decoration:none" href="/can-dogs-eat/'+f[1]+'.html">Can dogs eat '+fn+'? →</a></p>';
+    } else {
+      h='<div class="rh-grade">We couldn\'t recognise any ingredients</div>'+
+        '<p class="muted" style="margin-top:6px">Paste a dog food\'s full ingredient list straight off the bag — for example:<br><em>Chicken, Brown Rice, Chicken Meal, Chicken Fat, Sweet Potato, Flaxseed…</em></p>'+
+        '<p class="muted small" style="margin-top:10px">Or browse the <a href="/dog-food-ingredients.html">ingredient database</a>, or check <a href="/can-dogs-eat.html">can dogs eat…</a> for a single food.</p>';
+    }
+    res.innerHTML='<div class="result-head" style="align-items:flex-start"><div>'+h+'</div></div>';
+    res.classList.remove('hidden'); res.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
   let score = 58 + posScore + firstBonus - watchPen - badPen;
   if(bad.length>=1) score=Math.min(score,73);   // any avoid-tier ingredient caps the grade
   if(bad.length>=2) score=Math.min(score,55);
@@ -197,7 +220,8 @@ function checkFood(){
   if(unknown.length){
     html+='<h4 class="rsec">⚪ Not in our database ('+unknown.length+')</h4><p class="muted small">'+unknown.map(escapeHtml).join(', ')+'</p>';
   }
-  html+='<p class="muted small" style="margin-top:14px">WoofScore is an ingredient-level analysis against vet-reviewed criteria — informational only, not veterinary advice. Always consult your vet about your dog\'s diet.</p>';
+  if(tokens.length===1){ const f=findFood(raw); if(f) html+='<p class="muted small" style="margin-top:10px">Wondering if dogs can eat '+escapeHtml(f[0].toLowerCase())+' as a treat? See <a href="/can-dogs-eat/'+f[1]+'.html">can dogs eat '+escapeHtml(f[0].toLowerCase())+'</a>.</p>'; }
+  html+='<p class="muted small" style="margin-top:14px">WoofScore is an ingredient-level analysis against AAFCO, FDA &amp; veterinary-nutrition criteria — informational only, not veterinary advice. Always consult your vet about your dog\'s diet.</p>';
   res.innerHTML=html; res.classList.remove('hidden'); res.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function verdictText(s,b,w){
