@@ -19,3 +19,5 @@ mkocr.py
 products_extra.json
 breed_pool.json
 products_eu2.json
+photos/breed/*.png
+run_breeds.sh
