@@ -108,3 +108,9 @@ footer{padding:50px 0 60px;color:var(--muted);font-size:14px}
 table.rank{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
 table.rank th{text-align:left;border-bottom:2px solid var(--line);padding:9px 8px;font-size:13px;color:var(--muted)}
 table.rank td{border-bottom:1px solid var(--line);padding:10px 8px;vertical-align:top}
+.breedgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+.breedcard{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;transition:transform .12s ease,box-shadow .12s ease}
+.breedcard:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(20,40,30,.10)}
+.breedcard img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#EFEFE9}
+.breedcard span{display:block;padding:9px 11px;font-weight:700;font-size:13.5px;line-height:1.25}
+@media(max-width:560px){.breedgrid{grid-template-columns:repeat(2,1fr)}}
