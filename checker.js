@@ -25,11 +25,14 @@ const DB = [
   {n:"Sardine",t:"g",p:1,c:"Protein",a:["sardine","mackerel","anchovy"],r:"Named oily fish — omega-3s."},
 
   // ---- Unnamed / low-quality proteins (watch/bad) ----
-  {n:"Meat Meal (unnamed)",t:"w",c:"Protein",a:["meat meal","meat and bone meal","animal meal"],r:"Unnamed source — you can't tell what animal it's from."},
+  {n:"Meat Meal (unnamed)",t:"w",c:"Protein",a:["meat meal","meat and bone meal","animal meal","meat-and-bone meal"],r:"Unnamed source — you can't tell what animal it's from."},
+  {n:"Poultry Protein (unnamed)",t:"w",c:"Protein",a:["dried poultry protein","dehydrated poultry protein","dehydrated poultry proteins","poultry protein","poultry meat meal","dried meat protein","dried meat-and-animal proteins"],r:"\"Poultry\" doesn't say which bird or which parts — less transparent than a named meat like chicken."},
   {n:"Meat By-Product Meal",t:"w",c:"Protein",a:["meat by-product meal","poultry by-product meal","chicken by-product meal","by-product meal","by product meal"],r:"Unnamed by-products — variable, low-transparency protein."},
-  {n:"Animal By-Products",t:"w",c:"Protein",a:["animal by-products","by-products","by products"],r:"Vague, unnamed parts."},
+  {n:"Animal By-Products",t:"w",c:"Protein",a:["animal by-products","by-products","by products","meat and animal by-products"],r:"Vague, unnamed parts."},
   {n:"Animal Digest",t:"b",c:"Additive",a:["animal digest","digest"],r:"Vague flavour spray from unspecified tissue."},
-  {n:"Animal Fat (unnamed)",t:"w",c:"Fat",a:["animal fat","poultry fat"],r:"Unnamed fat source — quality varies."},
+  {n:"Animal Fat (unnamed)",t:"w",c:"Fat",a:["animal fat","poultry fat","animal fats","oils and fats"],r:"Unnamed fat source — quality varies."},
+  {n:"Plant Protein (added)",t:"w",c:"Filler",a:["vegetable protein","vegetable protein isolate","potato protein","plant protein"],r:"Plant protein added to boost the protein % — less valuable than a named meat."},
+  {n:"Cereals (unnamed)",t:"w",c:"Filler",a:["cereals"],r:"\"Cereals\" is a vague, low-transparency grain filler."},
 
   // ---- Healthy carbs & whole grains (good) ----
   {n:"Brown Rice",t:"k",c:"Carb",a:["brown rice"],r:"Digestible whole-grain carb."},
@@ -45,8 +48,8 @@ const DB = [
   {n:"Tapioca",t:"n",c:"Carb",a:["tapioca","tapioca starch"],r:"Grain-free starch binder; mostly calories."},
 
   // ---- Controversial fillers / grains (watch) ----
-  {n:"Corn",t:"w",c:"Carb",a:["corn","ground corn","whole corn","yellow corn"],r:"Cheap carb; fine for many dogs but often a filler."},
-  {n:"Corn Gluten Meal",t:"w",c:"Filler",a:["corn gluten meal"],r:"Plant protein booster that inflates protein numbers."},
+  {n:"Corn",t:"w",c:"Carb",a:["corn","ground corn","whole corn","yellow corn","maize","maize meal","maize flour","ground maize","whole grain maize","whole maize","maize germ"],r:"Cheap carb; fine for many dogs but often a filler."},
+  {n:"Corn Gluten Meal",t:"w",c:"Filler",a:["corn gluten meal","maize gluten","maize gluten meal","maize protein meal","maize protein"],r:"Plant protein booster that inflates protein numbers."},
   {n:"Wheat",t:"w",c:"Carb",a:["wheat","ground wheat","wheat flour"],r:"Common cheap carb and allergen for some dogs."},
   {n:"Wheat Gluten",t:"w",c:"Filler",a:["wheat gluten"],r:"Plant protein filler."},
   {n:"Wheat Middlings",t:"w",c:"Filler",a:["wheat middlings","wheat mill run"],r:"Low-cost milling by-product filler."},

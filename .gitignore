@@ -16,3 +16,5 @@ study_results.json
 breeds.json
 build_outreach.py
 mkocr.py
+products_extra.json
+breed_pool.json

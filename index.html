@@ -102,6 +102,15 @@
       <button class="btn btn-ghost" onclick="WS&&WS.photoOCR()">🖼️ Photo of ingredients</button>
     </div>
   </div>
+  <div class="checkcard" style="margin-top:14px">
+    <label for="breedpick">…or find the best food for your breed</label>
+    <div class="checkrow" style="margin-top:6px">
+      <input id="breedpick" list="breedlist" placeholder="Type your breed — e.g. Dachshund, Labrador, Poodle…" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:15px" onkeydown="if(event.key==='Enter')gotoBreed()">
+      <datalist id="breedlist"></datalist>
+      <button class="btn btn-primary" onclick="gotoBreed()">Go</button>
+    </div>
+    <p class="muted small" style="margin:8px 0 0">Nutrition priorities + WoofScore-rated picks (US &amp; Europe) for 199 breeds. <a href="/best-dog-food-by-breed.html">Browse all →</a></p>
+  </div>
   <div id="results" class="hidden"></div>
   <div class="disc" style="margin:18px auto 0;text-align:center">WoofScore grades ingredients against published AAFCO/FDA criteria. Informational only — not veterinary advice.</div>
 </div></section>
@@ -174,6 +183,10 @@
 <script src="/checker.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js" defer></script>
 <script src="/scan.js" defer></script>
+<script>
+(function(){fetch('/breeds_index.json').then(function(r){return r.json();}).then(function(d){var M={},dl=document.getElementById('breedlist');d.forEach(function(b){M[b.n.toLowerCase()]=b.s;if(dl){var o=document.createElement('option');o.value=b.n;dl.appendChild(o);}});window.__breedmap=M;}).catch(function(){});})();
+function gotoBreed(){var v=(document.getElementById('breedpick').value||'').trim().toLowerCase();if(!v)return;var M=window.__breedmap||{};var s=M[v];if(!s){for(var k in M){if(k.indexOf(v)===0){s=M[k];break;}}}location.href=s?('/best-dog-food-for-'+s+'.html'):'/best-dog-food-by-breed.html';}
+</script>
 <script>
 function goCheck(){var h=document.getElementById('heroq').value;var t=document.getElementById('ingredients');
   if(h&&h.trim()){t.value=h;checkFood();}
